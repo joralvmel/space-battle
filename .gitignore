@@ -1,0 +1,15 @@
+# Webstorm Studio specific
+.idea/
+*.iml
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Log files
+*.log
+
+# Android specific
+/captures/
+/output.json
+
+# Miscellaneous
