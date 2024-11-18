@@ -1,3 +1,48 @@
 .section {
     padding: 20px;
 }
+
+#records {
+    width: 400px;
+    margin: 0 auto;
+}
+
+/* Records list styles */
+.records-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.records-list-item {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.records-list-item:hover {
+    background-color: #e9ecef;
+}
+
+.record-number {
+    font-size: 1.2em;
+    color: #007bff;
+    margin-right: 5px;
+}
+
+.record-username {
+    font-size: 0.8em;
+    color: #343a40;
+    flex-grow: 1;
+}
+
+.record-punctuation {
+    font-size: 1em;
+    color: #6c757d;
+}

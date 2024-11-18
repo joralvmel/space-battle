@@ -32,3 +32,30 @@ function loadPreferences() {
 document.addEventListener('DOMContentLoaded', () => {
 	loadPreferences();
 });
+
+// Fetch and print top 10 scores
+function printTopTenScores(data) {
+	let htmlContent = '<ul class="records-list">';
+	data.forEach((record, index) => {
+		htmlContent += `<li class="records-list-item">
+			<div
+			  <span class="record-number"> ${index + 1}.</span>
+			  <span class="record-username">${record.username}</span>
+			</div>
+			<span class="record-punctuation">${record.punctuation} points</span>
+		</li>`;
+	});
+	htmlContent += '</ul>';
+	document.getElementById('records').innerHTML = htmlContent;
+}
+
+function fetchTopTenScores() {
+	fetch('http://wd.etsisi.upm.es:10000/records')
+		.then(response => response.json())
+		.then(data => printTopTenScores(data))
+		.catch(error => console.error('Error fetching data:', error));
+}
+
+window.onload = function() {
+	fetchTopTenScores();
+};
