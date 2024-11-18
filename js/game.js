@@ -53,7 +53,13 @@ $(document).ready(function() {
 // End Game
 	function endGame() {
 		clearInterval(timerInterval);
-		$('#final-score').text(score);
+		const gameTime = parseInt(localStorage.getItem('gameTime')) || 60;
+		const numUFOs = parseInt(localStorage.getItem('numUFOs')) || 5;
+		let finalScore = score / (gameTime / 60);
+		finalScore -= (numUFOs - 1) * 50;
+		finalScore = Math.max(finalScore, 0);
+
+		$('#final-score').text(finalScore.toFixed(0));
 		$('#gameOverModal').modal('show');
 	}
 
@@ -65,7 +71,7 @@ $(document).ready(function() {
 
 // View Records button action
 	$('#view-records').click(function() {
-		window.location.href = 'records.html'; // Change to your records page URL
+		window.location.href = 'records.html';
 	});
 
 // Function to reset the game
