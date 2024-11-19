@@ -2,6 +2,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
         registerForm.addEventListener('submit', function(event) {
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                event.preventDefault();
+                alert('Passwords do not match. Please try again.');
+                return;
+            }
+
             event.preventDefault();
             registerUser();
         });
@@ -28,6 +37,7 @@ function registerUser() {
         .then(response => {
             if (response.status === 201) {
                 alert('User registered successfully');
+                loginUser(username, password);
             } else if (response.status === 400) {
                 alert('Error: Missing username, email, or password');
             } else if (response.status === 409) {
