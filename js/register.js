@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
-        registerForm.addEventListener('submit', function(event) {
+        registerForm.addEventListener('submit', function (event) {
             const password = document.getElementById('registerPassword').value;
             const confirmPassword = document.getElementById('registerConfirmPassword').value;
 
             if (password !== confirmPassword) {
                 event.preventDefault();
-                alert('Passwords do not match. Please try again.');
+                showModal('Error', 'Passwords do not match. Please try again.');
                 return;
             }
 
@@ -36,23 +36,53 @@ function registerUser() {
     })
         .then(response => {
             if (response.status === 201) {
-                alert('User registered successfully');
-                loginUser(username, password);
+                showModal('Success', 'User registered successfully!', () => {
+                    loginAfterRegister(username, password);
+                });
             } else if (response.status === 400) {
-                alert('Error: Missing username, email, or password');
+                showModal('Error', 'Missing username, email, or password.');
             } else if (response.status === 409) {
-                alert('Error: Duplicated username');
+                showModal('Error', 'Username already exists.');
             } else if (response.status === 500) {
-                alert('Error: Internal server error');
+                showModal('Error', 'Internal server error. Please try again later.');
             } else {
                 return response.json().then(data => {
                     console.error('Unexpected response:', data);
-                    alert('Unexpected error occurred');
+                    showModal('Error', 'An unexpected error occurred.');
                 });
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Error registering user');
+            showModal('Error', 'Error registering user. Please try again later.');
+        });
+}
+
+function loginAfterRegister(username, password) {
+    fetch(`http://wd.etsisi.upm.es:10000/users/login?username=${username}&password=${password}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                throw new Error('Unexpected error occurred');
+            }
+        })
+        .then(data => {
+            if (data.startsWith('Bearer')) {
+                localStorage.setItem('authToken', data);
+                localStorage.setItem('username', username);
+                window.location.href = '../index.html';
+            } else {
+                showModal('Error', 'Login failed');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showModal('Error', error.message);
         });
 }

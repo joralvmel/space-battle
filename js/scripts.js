@@ -43,3 +43,25 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 });
+
+function showModal(title, message, callback) {
+	const modalTitle = document.getElementById('loginModalLabel');
+	const modalBody = document.getElementById('loginModalBody');
+	const $modal = $('#loginModal');
+
+	if (modalTitle && modalBody) {
+		modalTitle.innerText = title;
+		modalBody.innerText = message;
+
+		$modal.modal('show');
+
+		if (callback) {
+			$modal.on('hidden.bs.modal', function() {
+				callback();
+				$(this).off('hidden.bs.modal');
+			});
+		}
+	} else {
+		console.error('Modal elements not found. Ensure the modal structure is included in the HTML.');
+	}
+}

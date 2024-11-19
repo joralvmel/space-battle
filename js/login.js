@@ -1,11 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            loginUser();
-        });
-    }
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    loginUser();
 });
 
 function loginUser() {
@@ -33,17 +28,32 @@ function loginUser() {
         })
         .then(data => {
             if (data.startsWith('Bearer')) {
-                console.log('Success:', data);
-                alert('Login successful');
                 localStorage.setItem('authToken', data);
                 localStorage.setItem('username', username);
-                window.location.href = '../index.html';
+                showModal('Success', 'Login successful!', () => {
+                    window.location.href = '../index.html';
+                });
             } else {
-                alert('Login failed');
+                showModal('Error', 'Login failed');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert(error.message);
+            showModal('Error', error.message);
         });
+}
+
+function showModal(title, message, callback) {
+    const $loginModal = $('#loginModal');
+    document.getElementById('loginModalLabel').innerText = title;
+    document.getElementById('loginModalBody').innerText = message;
+
+    $loginModal.modal('show');
+
+    if (callback) {
+        $loginModal.on('hidden.bs.modal', function() {
+            callback();
+            $(this).off('hidden.bs.modal');
+        });
+    }
 }
