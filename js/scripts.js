@@ -9,4 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		});
 	});
+
+	// Display welcome message on index.html
+	const username = localStorage.getItem('username');
+	if (username) {
+		const userGreeting = document.getElementById('userGreeting');
+		if (userGreeting) {
+			userGreeting.innerHTML = `Welcome back, <strong>${username}</strong>!`;
+		}
+	}
 });

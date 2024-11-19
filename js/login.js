@@ -36,6 +36,8 @@ function loginUser() {
                 console.log('Success:', data);
                 alert('Login successful');
                 localStorage.setItem('authToken', data);
+                localStorage.setItem('username', username);
+                window.location.href = '../index.html';
             } else {
                 alert('Login failed');
             }
