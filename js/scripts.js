@@ -8,7 +8,25 @@ document.addEventListener('DOMContentLoaded', () => {
 				$(this).addClass('active');
 			}
 		});
+
+		// Check if user is logged in and update the nav bar
+		const authToken = localStorage.getItem('authToken');
+		const loginNavItem = document.getElementById('loginNavItem');
+
+		if (authToken && loginNavItem) {
+			loginNavItem.innerHTML = '<a class="nav-link" href="#" id="logoutLink">Logout</a>';
+			document.getElementById('logoutLink').addEventListener('click', function(event) {
+				event.preventDefault();
+				logoutUser();
+			});
+		}
 	});
+
+	function logoutUser() {
+		localStorage.removeItem('authToken');
+		localStorage.removeItem('username');
+		window.location.href = '/space-battle/pages/login.html';
+	}
 
 	// Display welcome message on index.html
 	const username = localStorage.getItem('username');
