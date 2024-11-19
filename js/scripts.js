@@ -12,13 +12,19 @@ document.addEventListener('DOMContentLoaded', () => {
 		// Check if user is logged in and update the nav bar
 		const authToken = localStorage.getItem('authToken');
 		const loginNavItem = document.getElementById('loginNavItem');
+		const registerNavItem = document.getElementById('registerNavItem');
 
-		if (authToken && loginNavItem) {
-			loginNavItem.innerHTML = '<a class="nav-link" href="#" id="logoutLink">Logout</a>';
-			document.getElementById('logoutLink').addEventListener('click', function(event) {
-				event.preventDefault();
-				logoutUser();
-			});
+		if (authToken) {
+			if (loginNavItem) {
+				loginNavItem.innerHTML = '<a class="nav-link" href="#" id="logoutLink">Logout</a>';
+				document.getElementById('logoutLink').addEventListener('click', function(event) {
+					event.preventDefault();
+					logoutUser();
+				});
+			}
+			if (registerNavItem) {
+				registerNavItem.style.display = 'none';
+			}
 		}
 	});
 
