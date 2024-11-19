@@ -4,6 +4,7 @@ $(document).ready(function() {
 	let timerInterval;
 	let missileActive = false;
 	const gameArea = $('#game-area');
+	const missile = $('#missile');
 
 	// Initialize game
 	function initGame() {
@@ -50,7 +51,7 @@ $(document).ready(function() {
 		}
 	}
 
-// End Game
+	// End Game
 	function endGame() {
 		clearInterval(timerInterval);
 		const gameTime = parseInt(localStorage.getItem('gameTime')) || 60;
@@ -79,7 +80,7 @@ $(document).ready(function() {
 		showModal('Game Over', 'Your final score is ' + finalScore);
 	}
 
-// Function to reset the game
+	// Function to reset the game
 	function resetGame() {
 		score = 0;
 		$('#score').text(`Score: ${score}`);
@@ -101,14 +102,30 @@ $(document).ready(function() {
 		if (!missileActive) {
 			const gameAreaOffset = $(this).offset();
 			const mouseX = e.pageX - gameAreaOffset.left;
-			const missile = $('#missile');
 			missile.css('left', mouseX - missile.width() / 2 + 'px').show();
+		}
+	});
+
+	// Move missile with keyboard arrows
+	$(document).keydown(function(e) {
+		if (!missileActive) {
+			const currentLeft = parseInt(missile.css('left'));
+			switch (e.key) {
+				case 'ArrowLeft':
+					missile.css('left', Math.max(currentLeft - 10, 0) + 'px').show();
+					break;
+				case 'ArrowRight':
+					missile.css('left', Math.min(currentLeft + 10, gameArea.width() - missile.width()) + 'px').show();
+					break;
+				case ' ':
+					fireMissile();
+					break;
+			}
 		}
 	});
 
 	function fireMissile() {
 		missileActive = true;
-		const missile = $('#missile');
 		missile.css('bottom', '0px').show();
 
 		let missileInterval = setInterval(function() {
