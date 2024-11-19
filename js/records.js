@@ -14,17 +14,32 @@ function fetchTopTenScores() {
 function printTopTenScores(data) {
     const recordsElement = document.getElementById('records');
     if (recordsElement) {
-        let htmlContent = '<ul class="records-list">';
+        let htmlContent = `
+            <table class="records-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Username</th>
+                        <th>Points</th>
+                        <th>UFOs</th>
+                        <th>Time (seconds)</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
         data.forEach((record, index) => {
-            htmlContent += `<li class="records-list-item">
-                <div>
-                    <span class="record-number">${index + 1}.</span>
-                    <span class="record-username">${record.username}</span>
-                </div>
-                <span class="record-punctuation">${record.punctuation} points</span>
-            </li>`;
+            const recordDate = new Date(record.recordDate).toLocaleDateString();
+            htmlContent += `<tr>
+                <td>${index + 1}</td>
+                <td>${record.username}</td>
+                <td>${record.punctuation} points</td>
+                <td>${record.ufos}</td>
+                <td>${record.disposedTime}</td>
+                <td>${recordDate}</td>
+            </tr>`;
         });
-        htmlContent += '</ul>';
+        htmlContent += '</tbody></table>';
         recordsElement.innerHTML = htmlContent;
     } else {
         console.error('Error: Element with ID "records" not found.');
