@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 
+	$("#modal-placeholder").load("../utils/modal.html");
+
 	function logoutUser() {
 		localStorage.removeItem('authToken');
 		localStorage.removeItem('username');
@@ -45,9 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function showModal(title, message, callback) {
-	const modalTitle = document.getElementById('loginModalLabel');
-	const modalBody = document.getElementById('loginModalBody');
-	const $modal = $('#loginModal');
+	const modalTitle = document.querySelector('.modal-title');
+	const modalBody = document.querySelector('.modal-body');
+	const $modal = $('.modal');
 
 	if (modalTitle && modalBody) {
 		modalTitle.innerText = title;

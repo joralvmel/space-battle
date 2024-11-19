@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     loadPreferences();
-    setupModalListeners();
 });
 
 function savePreferences() {
@@ -9,23 +8,22 @@ function savePreferences() {
     localStorage.setItem('numUFOs', numUFOs);
     localStorage.setItem('gameTime', gameTime);
 
-    // Show the modal
-    $('#preferencesModal').modal('show');
+    const playButton = document.getElementById('primaryButton');
+    if (playButton) {
+        playButton.innerText = 'Play';
+        playButton.style.display = 'inline-block';
+        playButton.addEventListener('click', () => {
+            window.location.href = 'play.html';
+        }, { once: true });
+    }
+
+    showModal('Preferences Saved', 'Your preferences have been saved successfully.');
 }
+
 
 function loadPreferences() {
     if (document.getElementById('numUFOs') && document.getElementById('gameTime')) {
         document.getElementById('numUFOs').value = localStorage.getItem('numUFOs') || 5;
         document.getElementById('gameTime').value = localStorage.getItem('gameTime') || 60;
     }
-}
-
-function setupModalListeners() {
-    document.getElementById('play-game').addEventListener('click', () => {
-        window.location.href = 'play.html';
-    });
-
-    document.getElementById('close-modal').addEventListener('click', () => {
-        $('#preferencesModal').modal('hide');
-    });
 }

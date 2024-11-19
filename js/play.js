@@ -59,20 +59,25 @@ $(document).ready(function() {
 		finalScore -= (numUFOs - 1) * 50;
 		finalScore = Math.max(finalScore, 0);
 
-		$('#final-score').text(finalScore.toFixed(0));
-		$('#gameOverModal').modal('show');
+		const recordsButton = document.getElementById('secondaryButton');
+		if (recordsButton) {
+			recordsButton.innerText = 'Records';
+			recordsButton.addEventListener('click', () => {
+				window.location.href = 'records.html';
+			}, { once: true });
+		}
+
+		const playAgainButton = document.getElementById('primaryButton');
+		if (playAgainButton) {
+			playAgainButton.innerText = 'Play Again';
+			playAgainButton.style.display = 'inline-block';
+			playAgainButton.addEventListener('click', () => {
+				resetGame();
+			}, { once: true });
+		}
+
+		showModal('Game Over', 'Your final score is ' + finalScore);
 	}
-
-// Play Again button action
-	$('#play-again').click(function() {
-		$('#gameOverModal').modal('hide');
-		resetGame();
-	});
-
-// View Records button action
-	$('#view-records').click(function() {
-		window.location.href = 'records.html';
-	});
 
 // Function to reset the game
 	function resetGame() {
@@ -81,6 +86,7 @@ $(document).ready(function() {
 		$('#game-area .ufo').remove();
 		clearInterval(timerInterval);
 		initGame();
+		$('.modal').modal('hide');
 	}
 
 	// Fire missile on left-click within the game area

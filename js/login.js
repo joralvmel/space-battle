@@ -1,6 +1,13 @@
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    loginUser();
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            loginUser();
+        });
+    } else {
+        console.error('Login form not found.');
+    }
 });
 
 function loginUser() {
@@ -41,19 +48,4 @@ function loginUser() {
             console.error('Error:', error);
             showModal('Error', error.message);
         });
-}
-
-function showModal(title, message, callback) {
-    const $loginModal = $('#loginModal');
-    document.getElementById('loginModalLabel').innerText = title;
-    document.getElementById('loginModalBody').innerText = message;
-
-    $loginModal.modal('show');
-
-    if (callback) {
-        $loginModal.on('hidden.bs.modal', function() {
-            callback();
-            $(this).off('hidden.bs.modal');
-        });
-    }
 }
