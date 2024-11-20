@@ -78,6 +78,7 @@ $(document).ready(function() {
 		}
 
 		showModal('Game Over', 'Your final score is ' + finalScore);
+		$(".close").remove();
 	}
 
 	// Function to reset the game
@@ -149,6 +150,10 @@ $(document).ready(function() {
 					clearInterval(missileInterval);
 					ufo.remove();
 					missile.css('bottom', '0px');
+					// Check if no UFOs are left
+					if ($('.ufo').length === 0) {
+						endGame();
+					}
 					return false;
 				}
 			});
