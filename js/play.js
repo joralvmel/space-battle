@@ -129,6 +129,10 @@ $(document).ready(function() {
 		missileActive = true;
 		missile.css('bottom', '0px').show();
 
+		// Play missile sound
+		const missileSound = document.getElementById('missile-sound').cloneNode();
+		missileSound.play();
+
 		let missileInterval = setInterval(function() {
 			let currentBottom = parseInt(missile.css('bottom'));
 			currentBottom += 5;
@@ -148,8 +152,29 @@ $(document).ready(function() {
 					missile.hide();
 					missileActive = false;
 					clearInterval(missileInterval);
-					ufo.remove();
 					missile.css('bottom', '0px');
+
+					// Show explosion
+					const explosion = $('<img src="../public/img/explosion.gif" class="explosion" alt="explode">');
+					explosion.css({
+						position: 'absolute',
+						top: ufoPos.top + 'px',
+						left: ufoPos.left + 'px',
+						width: ufo.width() + 'px',
+						height: ufo.height() + 'px'
+					});
+					gameArea.append(explosion);
+
+					// Play explosion sound
+					const explosionSound = document.getElementById('explosion-sound').cloneNode();
+					explosionSound.play();
+
+					setTimeout(function() {
+						explosion.remove();
+					}, 1000);
+
+					ufo.remove();
+
 					// Check if no UFOs are left
 					if ($('.ufo').length === 0) {
 						endGame();
