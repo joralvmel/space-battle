@@ -1,3 +1,58 @@
+body {
+    background-color: #1E1E1E;
+    color: #FFFFFF;
+}
+
+h1, p {
+    color: #FFFFFF;
+}
+
+.form-control{
+    background-color: #495057;
+    color: #FFFFFF;
+    border: 1px solid #717375;
+    &:focus {
+        background-color: #717375;
+        color: #FFFFFF;
+        border: 1px solid #ffffff;
+        box-shadow: 0 0 0 .2rem rgba(255, 255, 255, 0.25);
+    }
+}
+
+.modal-content{
+    background-color: #343a40;
+    color: #FFFFFF;
+}
+
+.close {
+    color: #c9c9c9;
+    &:hover {
+        color: #FFFFFF;
+    }
+}
+
+.btn-primary {
+    background-color: #777777;
+    border-color: #717375;
+    &:hover,
+    &:active,
+    &:focus{
+        background-color: #495057;
+        border-color: #495057;
+    }
+    &:focus{
+        box-shadow: 0 0 0 .2rem rgba(255, 255, 255, 0.25);
+    }
+}
+
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show>.btn-primary.dropdown-toggle {
+    background-color: #495057;
+    border-color: #495057;
+    box-shadow: 0 0 0 .2rem rgba(255, 255, 255, 0.25);
+}
+
 .section {
     padding: 20px;
 }
@@ -13,18 +68,19 @@
 .records-table th,
 .records-table td {
     padding: 12px 15px;
-    border: 1px solid #ddd;
+    border: 1px solid #444444;
 }
 
 .records-table th {
-    background-color: #f2f2f2;
+    background-color: #555555;
+    color: #FFFFFF;
     font-weight: bold;
 }
 
 .records-table tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #333333;
 }
 
 .records-table tr:hover {
-    background-color: #f1f1f1;
+    background-color: #444;
 }
