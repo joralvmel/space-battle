@@ -124,10 +124,10 @@ $(document).ready(function() {
 			const currentLeft = parseInt(battleship.css('left'));
 			switch (e.key) {
 				case 'ArrowLeft':
-					battleship.css('left', Math.max(currentLeft - 10, 0) + 'px').show();
+					battleship.css('left', Math.max(currentLeft - 20, 0) + 'px').show();
 					break;
 				case 'ArrowRight':
-					battleship.css('left', Math.min(currentLeft + 10, gameArea.width() - battleship.width()) + 'px').show();
+					battleship.css('left', Math.min(currentLeft + 20, gameArea.width() - battleship.width()) + 'px').show();
 					break;
 				case ' ':
 					fireLaser();
@@ -137,44 +137,44 @@ $(document).ready(function() {
 	});
 
 	function fireLaser() {
-		laserActive = true;
+		const newLaser = laser.clone();
 		const battleshipLeft = parseInt(battleship.css('left'));
 		const battleshipWidth = battleship.width();
-		const laserWidth = laser.width();
+		const laserWidth = newLaser.width();
 		const laserLeft = battleshipLeft + (battleshipWidth / 2) - (laserWidth / 2);
 
-		laser.css({
+		newLaser.css({
 			bottom: '60px',
 			left: laserLeft + 'px',
 			display: 'block'
 		});
+
+		gameArea.append(newLaser);
 
 		// Play laser sound
 		const laserSound = document.getElementById('laser-sound').cloneNode();
 		laserSound.play();
 
 		let laserInterval = setInterval(function() {
-			let currentBottom = parseInt(laser.css('bottom'));
+			let currentBottom = parseInt(newLaser.css('bottom'));
 			currentBottom += 10;
-			laser.css('bottom', currentBottom + 'px');
+			newLaser.css('bottom', currentBottom + 'px');
 
 			// Check collision with UFOs
 			let hit = false;
 			$('.ufo').each(function() {
 				const ufo = $(this);
 				const ufoPos = ufo.position();
-				const laserPos = laser.position();
+				const laserPos = newLaser.position();
 
 				if (laserPos.left > ufoPos.left && laserPos.left < ufoPos.left + ufo.width() &&
-					laserPos.top < ufoPos.top + ufo.height() && laserPos.top + laser.height() > ufoPos.top) {
+					laserPos.top < ufoPos.top + ufo.height() && laserPos.top + newLaser.height() > ufoPos.top) {
 					// Collision detected
 					hit = true;
 					score += 100;
 					$('#score').text(`Score: ${score}`);
-					laser.hide();
-					laserActive = false;
+					newLaser.remove();
 					clearInterval(laserInterval);
-					laser.css('bottom', '60px');
 
 					// Show explosion
 					const explosion = $('<img src="../public/img/explosion.gif" class="explosion" alt="explode">');
@@ -214,10 +214,8 @@ $(document).ready(function() {
 				}
 				score -= 25;
 				$('#score').text(`Score: ${score}`);
-				laser.hide();
-				laserActive = false;
+				newLaser.remove();
 				clearInterval(laserInterval);
-				laser.css('bottom', '60px');
 			}
 		}, 30);
 	}
