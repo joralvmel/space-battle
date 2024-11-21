@@ -45,6 +45,21 @@ $(document).ready(function() {
 				speed = -speed;
 			}
 			ufo.css('left', currentLeft + 'px');
+
+			// Check for collisions with other UFOs
+			$('.ufo').each(function() {
+				const otherUfo = $(this);
+				if (otherUfo[0] !== ufo[0]) {
+					const ufoPos = ufo.position();
+					const otherUfoPos = otherUfo.position();
+					if (ufoPos.left < otherUfoPos.left + otherUfo.width() &&
+						ufoPos.left + ufo.width() > otherUfoPos.left &&
+						ufoPos.top < otherUfoPos.top + otherUfo.height() &&
+						ufoPos.top + ufo.height() > otherUfoPos.top) {
+						speed = -speed;
+					}
+				}
+			});
 		}, 30);
 	}
 
