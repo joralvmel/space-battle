@@ -114,25 +114,25 @@ h1, p {
 }
 
 .btn-secondary {
-    background-color: #dc3545; /* Red background */
-    border-color: #dc3545; /* Red border */
+    background-color: #dc3545;
+    border-color: #dc3545;
     &:hover,
     &:active,
     &:focus {
-        background-color: #c82333; /* Darker red on hover, active, and focus */
-        border-color: #bd2130; /* Darker red border on hover, active, and focus */
+        background-color: #c82333;
+        border-color: #bd2130;
     }
     &:focus {
-        box-shadow: 0 0 0 .2rem rgba(220, 53, 69, 0.25); /* Red shadow on focus */
+        box-shadow: 0 0 0 .2rem rgba(220, 53, 69, 0.25);
     }
 }
 
 .btn-secondary:not(:disabled):not(.disabled).active,
 .btn-secondary:not(:disabled):not(.disabled):active,
 .show>.btn-secondary.dropdown-toggle {
-    background-color: #c82333; /* Darker red when active */
-    border-color: #bd2130; /* Darker red border when active */
-    box-shadow: 0 0 0 .2rem rgba(220, 53, 69, 0.25); /* Red shadow when active */
+    background-color: #c82333;
+    border-color: #bd2130;
+    box-shadow: 0 0 0 .2rem rgba(220, 53, 69, 0.25);
 }
 
 .username {
