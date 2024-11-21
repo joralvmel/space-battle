@@ -7,8 +7,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/play.css">
-    <audio id="explosion-sound" src="../public/audio/explosion.mp3" preload="auto"></audio>
-    <audio id="missile-sound" src="../public/audio/missile.mp3" preload="auto"></audio>
+    <audio id="play-song" src="../public/audio/play-song.mp3" preload="auto" loop></audio>
+    <audio id="hit-sound" src="../public/audio/hit.wav" preload="auto"></audio>
+    <audio id="laser-sound" src="../public/audio/laser.wav" preload="auto"></audio>
+    <audio id="game-over-sound" src="../public/audio/game-over.wav" preload="auto"></audio>
+    <audio id="miss-sound" src="../public/audio/miss.wav" preload="auto"></audio>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 </head>
 <body>
 <!-- Include Navigation -->
@@ -19,7 +23,8 @@
     <div id="game-area">
         <div id="score">Score: 0</div>
         <div id="timer">Time: 60</div>
-        <div id="missile"></div>
+        <div id="battleship"></div>
+        <div id="laser"></div>
     </div>
 </div>
 

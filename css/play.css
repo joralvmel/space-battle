@@ -7,15 +7,15 @@
     width: 100%;
     height: calc(100vh - 56px);
     background-color: #000;
-    background-image: url('../public/img/space-background.png');
+    background-image: url('../public/img/space-background.gif');
     background-size: cover;
     overflow: hidden;
 }
 
 .ufo {
     position: absolute;
-    width: 100px;
-    height: 50px;
+    width: 80px;
+    height: 40px;
     background-image: url('../public/img/ufo.png');
     background-size: cover;
     animation: ufo-float 2s infinite ease-in-out;
@@ -30,14 +30,24 @@
     }
 }
 
-#missile {
+#battleship {
     position: absolute;
     bottom: 0;
     left: 50%;
-    width: 20px;
-    height: 30px;
-    background-image: url('../public/img/missile.png');
+    width: 60px;
+    height: 60px;
+    background-image: url('../public/img/battleship.png');
     background-size: cover;
+}
+
+#laser {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    width: 5px;
+    height: 20px;
+    background-color: red;
+    display: none;
 }
 
 #score, #timer {

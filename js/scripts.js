@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (username) {
 		const userGreeting = document.getElementById('userGreeting');
 		if (userGreeting) {
-			userGreeting.innerHTML = `Welcome back, <strong>${username}</strong>!`;
+			userGreeting.innerHTML = `Hello, <span class="username">${username}</span>`;
 		}
 	}
 });

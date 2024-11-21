@@ -2,12 +2,18 @@ $(document).ready(function() {
 	let score = 0;
 	let time = 60;
 	let timerInterval;
-	let missileActive = false;
+	let laserActive = false;
 	const gameArea = $('#game-area');
-	const missile = $('#missile');
+	const battleship = $('#battleship');
+	const laser = $('#laser');
+
+	let playSong;
 
 	// Initialize game
 	function initGame() {
+		playSong = document.getElementById('play-song').cloneNode();
+		playSong.play();
+
 		const numUFOs = localStorage.getItem('numUFOs') || 5;
 		const gameTime = localStorage.getItem('gameTime') || 60;
 		time = parseInt(gameTime);
@@ -54,6 +60,11 @@ $(document).ready(function() {
 	// End Game
 	function endGame() {
 		clearInterval(timerInterval);
+		playSong.pause();
+		
+		const gameOverSound = document.getElementById('game-over-sound').cloneNode();
+		gameOverSound.play();
+
 		const gameTime = parseInt(localStorage.getItem('gameTime')) || 60;
 		const numUFOs = parseInt(localStorage.getItem('numUFOs')) || 5;
 		let finalScore = score / (gameTime / 60);
@@ -91,68 +102,79 @@ $(document).ready(function() {
 		$('.modal').modal('hide');
 	}
 
-	// Fire missile on left-click within the game area
+	// Fire laser on left-click within the game area
 	gameArea.click(function() {
-		if (!missileActive) {
-			fireMissile();
+		if (!laserActive) {
+			fireLaser();
 		}
 	});
 
-	// Move missile with mouse
+	// Move battleship with mouse
 	gameArea.mousemove(function(e) {
-		if (!missileActive) {
+		if (!laserActive) {
 			const gameAreaOffset = $(this).offset();
 			const mouseX = e.pageX - gameAreaOffset.left;
-			missile.css('left', mouseX - missile.width() / 2 + 'px').show();
+			battleship.css('left', mouseX - battleship.width() / 2 + 'px').show();
 		}
 	});
 
-	// Move missile with keyboard arrows
+	// Move battleship with keyboard arrows
 	$(document).keydown(function(e) {
-		if (!missileActive) {
-			const currentLeft = parseInt(missile.css('left'));
+		if (!laserActive) {
+			const currentLeft = parseInt(battleship.css('left'));
 			switch (e.key) {
 				case 'ArrowLeft':
-					missile.css('left', Math.max(currentLeft - 10, 0) + 'px').show();
+					battleship.css('left', Math.max(currentLeft - 10, 0) + 'px').show();
 					break;
 				case 'ArrowRight':
-					missile.css('left', Math.min(currentLeft + 10, gameArea.width() - missile.width()) + 'px').show();
+					battleship.css('left', Math.min(currentLeft + 10, gameArea.width() - battleship.width()) + 'px').show();
 					break;
 				case ' ':
-					fireMissile();
+					fireLaser();
 					break;
 			}
 		}
 	});
 
-	function fireMissile() {
-		missileActive = true;
-		missile.css('bottom', '0px').show();
+	function fireLaser() {
+		laserActive = true;
+		const battleshipLeft = parseInt(battleship.css('left'));
+		const battleshipWidth = battleship.width();
+		const laserWidth = laser.width();
+		const laserLeft = battleshipLeft + (battleshipWidth / 2) - (laserWidth / 2);
 
-		// Play missile sound
-		const missileSound = document.getElementById('missile-sound').cloneNode();
-		missileSound.play();
+		laser.css({
+			bottom: '60px',
+			left: laserLeft + 'px',
+			display: 'block'
+		});
 
-		let missileInterval = setInterval(function() {
-			let currentBottom = parseInt(missile.css('bottom'));
-			currentBottom += 5;
-			missile.css('bottom', currentBottom + 'px');
+		// Play laser sound
+		const laserSound = document.getElementById('laser-sound').cloneNode();
+		laserSound.play();
+
+		let laserInterval = setInterval(function() {
+			let currentBottom = parseInt(laser.css('bottom'));
+			currentBottom += 10;
+			laser.css('bottom', currentBottom + 'px');
 
 			// Check collision with UFOs
+			let hit = false;
 			$('.ufo').each(function() {
 				const ufo = $(this);
 				const ufoPos = ufo.position();
-				const missilePos = missile.position();
+				const laserPos = laser.position();
 
-				if (missilePos.left > ufoPos.left && missilePos.left < ufoPos.left + ufo.width() &&
-					missilePos.top < ufoPos.top + ufo.height() && missilePos.top + missile.height() > ufoPos.top) {
+				if (laserPos.left > ufoPos.left && laserPos.left < ufoPos.left + ufo.width() &&
+					laserPos.top < ufoPos.top + ufo.height() && laserPos.top + laser.height() > ufoPos.top) {
 					// Collision detected
+					hit = true;
 					score += 100;
 					$('#score').text(`Score: ${score}`);
-					missile.hide();
-					missileActive = false;
-					clearInterval(missileInterval);
-					missile.css('bottom', '0px');
+					laser.hide();
+					laserActive = false;
+					clearInterval(laserInterval);
+					laser.css('bottom', '60px');
 
 					// Show explosion
 					const explosion = $('<img src="../public/img/explosion.gif" class="explosion" alt="explode">');
@@ -166,12 +188,12 @@ $(document).ready(function() {
 					gameArea.append(explosion);
 
 					// Play explosion sound
-					const explosionSound = document.getElementById('explosion-sound').cloneNode();
-					explosionSound.play();
+					const hitSound = document.getElementById('hit-sound').cloneNode();
+					hitSound.play();
 
 					setTimeout(function() {
 						explosion.remove();
-					}, 1000);
+					}, 500);
 
 					ufo.remove();
 
@@ -183,18 +205,22 @@ $(document).ready(function() {
 				}
 			});
 
-			// If missile goes out of bounds
+			// If laser goes out of bounds
 			if (currentBottom > gameArea.height()) {
+				if (!hit) {
+					// Play miss sound
+					const missSound = document.getElementById('miss-sound').cloneNode();
+					missSound.play();
+				}
 				score -= 25;
 				$('#score').text(`Score: ${score}`);
-				missile.hide();
-				missileActive = false;
-				clearInterval(missileInterval);
-				missile.css('bottom', '0px');
+				laser.hide();
+				laserActive = false;
+				clearInterval(laserInterval);
+				laser.css('bottom', '60px');
 			}
 		}, 30);
 	}
-
 	// Start the game
 	initGame();
 });

@@ -1,6 +1,8 @@
 body {
     background-color: #1E1E1E;
     color: #FFFFFF;
+    font-family: 'Press Start 2P', cursive;
+    background-image: url('../public/img/background.gif');
 }
 
 h1, p {
@@ -19,9 +21,67 @@ h1, p {
     }
 }
 
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    max-width: 550px;
+}
+
+.container .header {
+    width: 100%;
+}
+
+.container .content {
+    width: 100%;
+    padding-top: 20px;
+}
+
+.container button {
+    margin-top: 20px;
+    height: 60px;
+    width: 300px;
+}
+
+.container form {
+    width: 100%;
+    max-width: 500px;
+}
+
+.form-group input {
+    height: 60px;
+}
+
+.modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0 auto;
+}
+
 .modal-content{
-    background-color: #343a40;
+    background-color: rgba(52, 58, 64, 0.8);
     color: #FFFFFF;
+    border: 10px groove #FFFFFF;
+    border-radius: 20px;
+}
+
+.modal-header {
+    color: #c9c903;
+    border: none;
+}
+
+.modal-footer {
+    border: none;
+}
+
+.modal-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .close {
@@ -32,25 +92,52 @@ h1, p {
 }
 
 .btn-primary {
-    background-color: #777777;
-    border-color: #717375;
+    background-color: #28a745;
+    border-color: #28a745;
     &:hover,
     &:active,
-    &:focus{
-        background-color: #495057;
-        border-color: #495057;
+    &:focus {
+        background-color: #218838;
+        border-color: #1e7e34;
     }
-    &:focus{
-        box-shadow: 0 0 0 .2rem rgba(255, 255, 255, 0.25);
+    &:focus {
+        box-shadow: 0 0 0 .2rem rgba(40, 167, 69, 0.25);
     }
 }
 
 .btn-primary:not(:disabled):not(.disabled).active,
 .btn-primary:not(:disabled):not(.disabled):active,
 .show>.btn-primary.dropdown-toggle {
-    background-color: #495057;
-    border-color: #495057;
-    box-shadow: 0 0 0 .2rem rgba(255, 255, 255, 0.25);
+    background-color: #218838;
+    border-color: #1e7e34;
+    box-shadow: 0 0 0 .2rem rgba(40, 167, 69, 0.25);
+}
+
+.btn-secondary {
+    background-color: #dc3545; /* Red background */
+    border-color: #dc3545; /* Red border */
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: #c82333; /* Darker red on hover, active, and focus */
+        border-color: #bd2130; /* Darker red border on hover, active, and focus */
+    }
+    &:focus {
+        box-shadow: 0 0 0 .2rem rgba(220, 53, 69, 0.25); /* Red shadow on focus */
+    }
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show>.btn-secondary.dropdown-toggle {
+    background-color: #c82333; /* Darker red when active */
+    border-color: #bd2130; /* Darker red border when active */
+    box-shadow: 0 0 0 .2rem rgba(220, 53, 69, 0.25); /* Red shadow when active */
+}
+
+.username {
+    color: #c9c903;
+    font-size: 1.2em;
 }
 
 .section {
@@ -83,4 +170,27 @@ h1, p {
 
 .records-table tr:hover {
     background-color: #444;
+}
+
+.how-to-play {
+    background-color: rgba(52, 58, 64, 0.8);
+    border: 2px solid #FFFFFF;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    list-style-type: none;
+    text-align: left;
+}
+
+.how-to-play li {
+    margin-bottom: 10px
+}
+
+.text-highlight {
+    color: #c9c903;
+}
+
+.nav-item .nav-link.active {
+    font-weight: bold;
+    color: #c9c903 !important;
 }

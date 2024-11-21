@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UFO Battle - Home</title>
+  <title>Space Battle - Home</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/styles.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <audio id="menu-song" src="/public/audio/menu-song.mp3" preload="auto" loop></audio>
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 </head>
 <body>
 
@@ -15,14 +16,30 @@
 
 <!-- Home Section -->
 <div class="container mt-5">
-  <h1>Welcome to UFO Battle</h1>
-  <p id="userGreeting"></p>
-  <p>Get ready to destroy UFOs and earn points!</p>
+  <div class="header">
+    <h1>Welcome to Space Battle!</h1>
+  </div>
+  <div class="content">
+    <p id="userGreeting"></p>
+    <p>Get ready to destroy alien invaders and earn points!</p>
+    <ul class="how-to-play">
+      <li> <span class="text-highlight">Move:</span> Move your <span class="text-highlight">mouse</span> or press <span class="text-highlight">< ></span> on your <span class="text-highlight">keyboard</span> to move the spaceship.</li>
+      <li><span class="text-highlight">Fire:</span> Press <span class="text-highlight">Space Bar</span> or <span class="text-highlight">Left Click</span>.</li>
+    </ul>
+    <button onclick="location.href='pages/play.html'" class="btn btn-primary mt-3">Play Game</button>  </div>
 </div>
 
 <!-- Include Scripts -->
-<script src="js/scripts.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="js/scripts.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuSong = document.getElementById('menu-song');
+    if (menuSong) {
+      menuSong.play();
+    }
+  });
+</script>
 </body>
 </html>
