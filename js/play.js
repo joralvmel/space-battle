@@ -3,6 +3,9 @@ $(document).ready(function() {
 	let time = 60;
 	let timerInterval;
 	let laserActive = false;
+	let totalShots = 0;
+	let goodShots = 0;
+	let ufosHit = 0;
 	const gameArea = $('#game-area');
 	const battleship = $('#battleship');
 	const laser = $('#laser');
@@ -76,7 +79,7 @@ $(document).ready(function() {
 	function endGame() {
 		clearInterval(timerInterval);
 		playSong.pause();
-		
+
 		const gameOverSound = document.getElementById('game-over-sound').cloneNode();
 		gameOverSound.play();
 
@@ -85,6 +88,8 @@ $(document).ready(function() {
 		let finalScore = score / (gameTime / 60);
 		finalScore -= (numUFOs - 1) * 50;
 		finalScore = Math.max(finalScore, 0);
+
+		const accuracy = totalShots > 0 ? ((goodShots / totalShots) * 100).toFixed(2) : 0;
 
 		const recordsButton = document.getElementById('secondaryButton');
 		if (recordsButton) {
@@ -103,13 +108,19 @@ $(document).ready(function() {
 			}, { once: true });
 		}
 
-		showModal('Game Over', 'Your final score is ' + finalScore);
+		showModal('Game Over', `Your final score is ${finalScore}
+						UFOs hit: ${ufosHit}/${numUFOs}
+						Good Shots: ${goodShots}/${totalShots}
+						Accuracy: ${accuracy}%`);
 		$(".close").remove();
 	}
 
 	// Function to reset the game
 	function resetGame() {
 		score = 0;
+		totalShots = 0;
+		goodShots = 0;
+		ufosHit = 0;
 		$('#score').text(`Score: ${score}`);
 		$('#game-area .ufo').remove();
 		clearInterval(timerInterval);
@@ -152,6 +163,7 @@ $(document).ready(function() {
 	});
 
 	function fireLaser() {
+		totalShots++;
 		const newLaser = laser.clone();
 		const battleshipLeft = parseInt(battleship.css('left'));
 		const battleshipWidth = battleship.width();
@@ -186,6 +198,8 @@ $(document).ready(function() {
 					laserPos.top < ufoPos.top + ufo.height() && laserPos.top + newLaser.height() > ufoPos.top) {
 					// Collision detected
 					hit = true;
+					goodShots++;
+					ufosHit++;
 					score += 100;
 					$('#score').text(`Score: ${score}`);
 					newLaser.remove();
@@ -234,6 +248,7 @@ $(document).ready(function() {
 			}
 		}, 30);
 	}
+
 	// Start the game
 	initGame();
 });

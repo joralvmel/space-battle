@@ -10,7 +10,7 @@ h1, p {
 }
 
 .navbar {
-    background-color: rgba(52, 58, 64, 0.6) !important; /* #343a40 with 80% opacity */
+    background-color: rgba(52, 58, 64, 0.6) !important;
 }
 
 .form-control{
