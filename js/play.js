@@ -2,7 +2,6 @@ $(document).ready(function() {
 	let score = 0;
 	let time = 60;
 	let timerInterval;
-	let laserActive = false;
 	let totalShots = 0;
 	let goodShots = 0;
 	let ufosHit = 0;
@@ -108,10 +107,13 @@ $(document).ready(function() {
 			}, { once: true });
 		}
 
+		// Remove all UFOs
+		$('#game-area .ufo').remove();
+
 		showModal('Game Over', `Your final score is ${finalScore}
-						UFOs hit: ${ufosHit}/${numUFOs}
-						Good Shots: ${goodShots}/${totalShots}
-						Accuracy: ${accuracy}%`);
+        UFOs hit: ${ufosHit}/${numUFOs}
+        Good Shots: ${goodShots}/${totalShots}
+        Accuracy: ${accuracy}%`);
 		$(".close").remove();
 	}
 
@@ -130,35 +132,29 @@ $(document).ready(function() {
 
 	// Fire laser on left-click within the game area
 	gameArea.click(function() {
-		if (!laserActive) {
-			fireLaser();
-		}
+		fireLaser();
 	});
 
 	// Move battleship with mouse
 	gameArea.mousemove(function(e) {
-		if (!laserActive) {
-			const gameAreaOffset = $(this).offset();
-			const mouseX = e.pageX - gameAreaOffset.left;
-			battleship.css('left', mouseX - battleship.width() / 2 + 'px').show();
-		}
+		const gameAreaOffset = $(this).offset();
+		const mouseX = e.pageX - gameAreaOffset.left;
+		battleship.css('left', mouseX - battleship.width() / 2 + 'px').show();
 	});
 
 	// Move battleship with keyboard arrows
 	$(document).keydown(function(e) {
-		if (!laserActive) {
-			const currentLeft = parseInt(battleship.css('left'));
-			switch (e.key) {
-				case 'ArrowLeft':
-					battleship.css('left', Math.max(currentLeft - 20, 0) + 'px').show();
-					break;
-				case 'ArrowRight':
-					battleship.css('left', Math.min(currentLeft + 20, gameArea.width() - battleship.width()) + 'px').show();
-					break;
-				case ' ':
-					fireLaser();
-					break;
-			}
+		const currentLeft = parseInt(battleship.css('left'));
+		switch (e.key) {
+			case 'ArrowLeft':
+				battleship.css('left', Math.max(currentLeft - 20, 0) + 'px').show();
+				break;
+			case 'ArrowRight':
+				battleship.css('left', Math.min(currentLeft + 20, gameArea.width() - battleship.width()) + 'px').show();
+				break;
+			case ' ':
+				fireLaser();
+				break;
 		}
 	});
 
